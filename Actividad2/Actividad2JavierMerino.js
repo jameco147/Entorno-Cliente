@@ -228,25 +228,79 @@ while(!salir){
     }
     //Modificación
     if(opcion === 3){
-        console.log('¿Que quieres modificar?');
+        console.log('¿Que quieres modificar?\n');
         console.log('1) Autores');
         console.log('2) Articulos cientificos');
         console.log('3) Patentes cientificas');
         let opcion = readline.questionInt('Por favor seleccione una de estas opciones: ');
 
         if(opcion === 1){
-            let opcion = readline.question('Introduce el nombre del autor: ');
-            for(let i = 0; i < listaAutor.length; i++){
-                let autor = listaAutor[i];
-                if(autor.nombre === opcion){
-                    let nuevoNombre = readline.question('Introduce el nuevo nombre: ');
-                    autor.nombre = nuevoNombre;
-                    console.log(listaAutor);
-                    console.log('Registrado con exito');
-                    break;
+            console.log('¿Que quieres modificar?\n');
+            console.log('1) Nombre');
+            console.log('2) Apellidos');
+            let opcion = readline.questionInt('Por favor seleccione una de estas opciones: ');
+            //Modificar nombre
+            if(opcion === 1){
+                let opcion = readline.question('Introduce el nombre del autor: ');
+                for(let i = 0; i < listaAutor.length; i++){
+                    let autor = listaAutor[i];
+                    if(autor.nombre === opcion){
+                        let nuevoNombre = readline.question('Introduce el nuevo nombre: ');
+                        autor.nombre = nuevoNombre;
+                        console.log(listaAutor);
+                        console.log('Nombre modificado con exito');
+                        break;
+                    }      
                 }      
-            }      
+            }
+            //Modificar apellido
+            if(opcion === 2){
+                let opcion = readline.question('Introduce el nombre del autor: ');
+                for(let i = 0; i < listaAutor.length; i++){
+                    let autor = listaAutor[i];
+                    if(autor.nombre === opcion){
+                        let nuevosApellidos = readline.question('Introduce los nuevos apellidos: ');
+                        autor.apellidos = nuevosApellidos;
+                        console.log(listaAutor);
+                        console.log('Nombre modificado con exito');
+                        break;
+                    }      
+                }      
+            }
+        }
+        //Modificar articulos
+        if(opcion === 2){
+            console.log('¿Que tipo de articulo desea modificar?\n');
+            console.log('1) Articulo de revista');
+            console.log('2) Articulo en conferencia\n');
+            let opcion = readline.questionInt('Por favor seleccione una de estas opciones: ');
+            //Modificar articulo de revista
+            if(opcion === 1){
+                console.log('¿Que quieres modificar?\n');
+                console.log('1) Titulo');
+                console.log('2) Autor');
+                console.log('3) Numero de paginas');
+                console.log('4) Anyo de publicacion');
+                console.log('5) Numero de menciones');        
+                console.log('6) Editorial');
+                console.log('7) Factor de impacto');
+                let opcion = readline.questionInt('Por favor seleccione una de estas opciones: ');
 
+                if(opcion === 1){
+                    let opcion = readline.question('Introduce el titulo de la revista: ');
+                    for(let i = 0; i < listaRevista.length; i++){
+                    let revista = listaRevista[i];
+                    if(revista.titulo === opcion){
+                        let nuevoTitulo = readline.question('Introduce el titulo nuevo: ');
+                        revista.titulo = nuevoTitulo;
+                        console.log(listaRevista);
+                        console.log('Titulo modificado con exito');
+                        break;
+                        }      
+                    }      
+                    
+                }
+            }
         }
 
 
