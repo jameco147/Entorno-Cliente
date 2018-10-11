@@ -181,9 +181,29 @@ while(!salir){
                 }      
             }           
         }
+    }
 
+    if(opcion === 3){
+        console.log('¿Que quieres modificar?');
+        console.log('1) Autores');
+        console.log('2) Articulos cientificos');
+        console.log('3) Patentes cientificas');
+        let opcion = readline.questionInt('Por favor seleccione una de estas opciones: ');
 
+        if(opcion === 1){
+            let opcion = readline.question('Introduce el nombre del autor: ');
+            for(let i = 0; i < listaAutor.length; i++){
+                let autor = listaAutor[i];
+                if(autor.nombre === opcion){
+                    let nuevoNombre = readline.question('Introduce el nuevo nombre: ');
+                    autor.nombre = nuevoNombre;
+                    console.log(listaAutor);
+                    console.log('Registrado con exito');
+                    break;
+                }      
+            }      
 
+        }
 
 
 
