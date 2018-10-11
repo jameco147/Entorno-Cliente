@@ -56,15 +56,16 @@ let listaPatentes = [];
 let salir = false; //Bandera o flag para hacer el while.
 
 while(!salir){
-    console.log('Bienvenidos al sistema de produccion cientifica');
+    console.log('\nBienvenidos al sistema de produccion cientifica');
     console.log('1) Dar de alta');
     console.log('2) Dar de baja');
     console.log('3) Modificación');
     console.log('4) Salir del sistema');
     let opcion = readline.questionInt('Por favor seleccione una de estas opciones: ');
 
+    //Dar de alta
     if(opcion === 1){
-        console.log('¿Que quieres dar de alta?');
+        console.log('¿Que quieres dar de alta?\n');
         console.log('1) Autores');
         console.log('2) Articulos cientificos');
         console.log('3) Patentes cientificas');
@@ -162,9 +163,9 @@ while(!salir){
             }
 
     }
-
+    //Dar de baja
     if(opcion === 2){
-        console.log('¿Que quieres dar de baja?');
+        console.log('¿Que quieres dar de baja?\n');
         console.log('1) Autores');
         console.log('2) Articulos cientificos');
         console.log('3) Patentes cientificas');
@@ -181,8 +182,51 @@ while(!salir){
                 }      
             }           
         }
-    }
 
+        if(opcion === 2){
+            console.log('¿Que tipo de articulo desea dar de baja?\n');
+            console.log('1) Articulo de revista');
+            console.log('2) Articulo en conferencia\n');
+            let opcion = readline.questionInt('Por favor seleccione una de estas opciones: ');
+            if(opcion === 1){
+                let opcion = readline.question('Introduce el titulo del articulo de revista: ');
+                for(let i = 0; i < listaRevista.length; i++){
+                    let revista = listaRevista[i];
+                    if(revista.titulo === opcion){
+                        listaRevista.splice(i);
+                        console.log(listaRevista);
+                        console.log('Articulo dado de baja con exito');
+                        break;
+                    } 
+                }
+            }
+            if(opcion === 2){
+                let opcion = readline.question('Introduce el titulo del articulo en conferencia: ');
+                for(let i = 0; i < listaConferencia.length; i++){
+                    let conferencia = listaConferencia[i];
+                    if(conferencia.titulo === opcion){
+                        listaConferencia.splice(i);
+                        console.log('Articulo dado de baja con exito');
+                        break;
+                    } 
+                }
+            }
+        }
+
+        if(opcion === 3){
+            let opcion = readline.question('Introduce el titulo de la patente: ');
+            for(let i = 0; i < listaPatentes.length; i++){
+                let patente = listaPatentes[i];
+                if(patente.titulo === opcion){
+                    listaPatentes.splice(i);
+                    console.log(listaPatentes);
+                    console.log('Patente dada de baja con exito');
+                    break;
+                } 
+            }
+        }
+    }
+    //Modificación
     if(opcion === 3){
         console.log('¿Que quieres modificar?');
         console.log('1) Autores');
