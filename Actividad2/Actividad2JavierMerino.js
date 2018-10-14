@@ -10,7 +10,7 @@ class Autor {
 
 
 class Publicaciones {
-    constructor(titulo,autores){
+    constructor(titulo,...autores){
         this.titulo = titulo;
         this.autores = autores;
     }
@@ -18,7 +18,7 @@ class Publicaciones {
 
 class ArticulosCientíficos extends Publicaciones {
     constructor(titulo,autores,numPaginas,anyoPublicacion,numMenciones){
-        super(titulo,autores);
+        super(titulo,...autores);
         this.numPaginas = numPaginas;
         this.anyoPublicacion = anyoPublicacion;
         this.numMenciones = numMenciones;
@@ -43,7 +43,7 @@ class ArticulosConferencia extends ArticulosCientíficos {
 
 class PatenteCientifica extends Publicaciones {
     constructor(titulo,autores,anyoPublicacion,anyoVencimiento){
-        super(titulo,autores);
+        super(titulo,...autores);
         this.anyoPublicacion = anyoPublicacion;
         this.anyoVencimiento = anyoVencimiento;
     }
@@ -60,7 +60,8 @@ while(!salir){
     console.log('1) Dar de alta');
     console.log('2) Dar de baja');
     console.log('3) Modificación');
-    console.log('4) Salir del sistema');
+    console.log('4) Busqueda')
+    console.log('5) Salir del sistema');
     let opcion = readline.questionInt('Por favor seleccione una de estas opciones: ');
 
     //Dar de alta
@@ -97,7 +98,11 @@ while(!salir){
 
                 if(opcion === 1){
                     let titulo = readline.question('Por favor introduce un titulo: ');
-                    let autor = readline.question('Por favor introduce un autor: ');
+                    let numAutores = readline.question('¿Cuantos autores tiene?: ');
+                    let autor = [];
+                    for(let i = 0; i < numAutores; i++){
+                        autor[i] = readline.question('Por favor introduce un autor: ');
+                    }
                     let numPaginas = readline.question('Por favor introduce una numero de paginas: ');
                     let anyoPublicacion = readline.question('Por favor introduce un anyo de publicacion: ');
                     let numMenciones = readline.question('Por favor introduce un numero de menciones: ');
@@ -120,7 +125,11 @@ while(!salir){
 
                 if(opcion === 2){
                     let titulo = readline.question('Por favor introduce un titulo: ');
-                    let autor = readline.question('Por favor introduce un autor: ');
+                    let numAutores = readline.question('¿Cuantos autores tiene?');
+                    let autor = [];
+                    for(let i = 0; i < numAutores; i++){
+                        autor[i] = readline.question('Por favor introduce un autor: ');
+                    }
                     let numPaginas = readline.question('Por favor introduce una numero de paginas: ');
                     let anyoPublicacion = readline.question('Por favor introduce un anyo de publicacion: ');
                     let numMenciones = readline.question('Por favor introduce un numero de menciones: ');
@@ -144,10 +153,15 @@ while(!salir){
             
             if(opcion === 3){
                 let titulo = readline.question('Por favor introduce un titulo: ');
-                let autor = readline.question('Por favor introduce un autor: ');
+                let numAutores = readline.question('¿Cuantos autores tiene?');
+                let autor = [];
+                for(let i = 0; i < numAutores; i++){
+                    autor[i] = readline.question('Por favor introduce un autor: ');
+                }
+                   
                 let anyoPublicacion = readline.question('Por favor introduce un anyo de publicacion: ');
                 let anyoVencimiento = readline.question('Por favor introduce un anyo de vencimiento: ');
-                let newPatente = new PatenteCientifica(titulo, autor, anyoPublicacion,anyoVencimiento);
+                let newPatente = new PatenteCientifica(titulo,autor, anyoPublicacion,anyoVencimiento);
                 listaPatentes.push(newPatente);
                 console.log(listaPatentes);
                 console.log('Registro con exito');
@@ -250,6 +264,9 @@ while(!salir){
                         console.log(listaAutor);
                         console.log('Nombre modificado con exito');
                         break;
+                    } else {
+                        console.log('Autor no encontrado');
+                        salir = true;
                     }      
                 }      
             }
@@ -262,12 +279,16 @@ while(!salir){
                         let nuevosApellidos = readline.question('Introduce los nuevos apellidos: ');
                         autor.apellidos = nuevosApellidos;
                         console.log(listaAutor);
-                        console.log('Nombre modificado con exito');
+                        console.log('Apellido modificado con exito');
                         break;
-                    }      
+                    } else {
+                        console.log('Autor no encontrado');
+                        salir = true;
+                    }         
                 }      
             }
         }
+        
         //Modificar articulos
         if(opcion === 2){
             console.log('¿Que tipo de articulo desea modificar?\n');
@@ -276,35 +297,133 @@ while(!salir){
             let opcion = readline.questionInt('Por favor seleccione una de estas opciones: ');
             //Modificar articulo de revista
             if(opcion === 1){
-                console.log('¿Que quieres modificar?\n');
-                console.log('1) Titulo');
-                console.log('2) Autor');
-                console.log('3) Numero de paginas');
-                console.log('4) Anyo de publicacion');
-                console.log('5) Numero de menciones');        
-                console.log('6) Editorial');
-                console.log('7) Factor de impacto');
-                let opcion = readline.questionInt('Por favor seleccione una de estas opciones: ');
-
-                if(opcion === 1){
-                    let opcion = readline.question('Introduce el titulo de la revista: ');
-                    for(let i = 0; i < listaRevista.length; i++){
-                    let revista = listaRevista[i];
-                    if(revista.titulo === opcion){
-                        let nuevoTitulo = readline.question('Introduce el titulo nuevo: ');
-                        revista.titulo = nuevoTitulo;
-                        console.log(listaRevista);
-                        console.log('Titulo modificado con exito');
-                        break;
-                        }      
-                    }      
-                    
+                let titulo = readline.question('Introduce el titulo de la revista: ');
+                var opt = 0;
+                if(listaRevista.length == 0){
+                    console.log('No hay revistas');
                 }
-            }
+                    for(let i = 0; i < listaRevista.length; i++){
+                        var revista = listaRevista[i];
+                        if(revista.titulo === titulo){  
+                            while(opt != 8){
+                                console.log('¿Que quieres modificar?\n');
+                                console.log('1) Titulo');
+                                console.log('2) Autor');
+                                console.log('3) Numero de paginas');
+                                console.log('4) Anyo de publicacion');
+                                console.log('5) Numero de menciones');        
+                                console.log('6) Editorial');
+                                console.log('7) Factor de impacto');
+                                console.log('8) Salir');
+
+                                opt = readline.questionInt('Por favor seleccione una de estas opciones: ');
+                                switch(opt){
+                                    case 1: 
+                                        let nuevoTitulo = readline.question('Introduce el titulo nuevo: ');
+                                        revista.titulo = nuevoTitulo;
+                                        console.log(listaRevista);
+                                        console.log('Titulo modificado con exito');
+                                    break;
+                                    case 2:
+                                        let numAutores = readline.question('¿Cuantos autores tiene?');
+                                        let nuevoAutor = [];
+                                        for(let i = 0; i < numAutores; i++){
+                                            nuevoAutor[i] = readline.question('Por favor introduce un autor: ');
+                                        }
+                                        revista.autores = nuevoAutor;
+                                        console.log(listaRevista);
+                                        console.log('Autor/es modificado/s con exito');
+                                    break;
+                                    case 3:
+                                        let nuevoNumPaginas = readline.question('Introduce el numero de paginas: ');
+                                        revista.numPaginas = nuevoNumPaginas;
+                                        console.log(listaRevista);
+                                        console.log('Numero de paginas modificado con exito');
+                                        break;
+                                    case 4:
+                                        let nuevoAnyoPublicacion = readline.question('Introduce el anyo de publicacion: ');
+                                        revista.anyoPublicacion = nuevoAnyoPublicacion;
+                                        console.log(listaRevista);
+                                        console.log('Anyo de publicacion modificado con exito');
+                                        break;
+                                    case 5:
+                                        let nuevoNumMenciones = readline.question('Introduce el numero de menciones: ');
+                                        revista.numMenciones = nuevoNumMenciones;
+                                        console.log(listaRevista);
+                                        console.log('Numero de menciones modificado con exito');
+                                        break;
+                                    case 6:
+                                        let nuevaEditorial = readline.question('Introduce la editorial: ');
+                                        revista.editorial = nuevaEditorial;
+                                        console.log(listaRevista);
+                                        console.log('Editorial modificada con exito');
+                                        break;
+                                    case 7:
+                                        let nuevoFactorImpacto = readline.question('Introduce el factor de impacto: ');
+                                        revista.factorImpacto = nuevoFactorImpacto;
+                                        console.log(listaRevista);
+                                        console.log('Factor de impacto modificado con exito');
+                                        break;               
+                                    default:
+                                        console.log('Saliendo');
+                                
+                                }
+                            }    
+
+                        } else {
+                            console.log('Revista no encontrada');
+                        }
+                    }
+
+                            
+                
+                }
+
+                //Opcion revista en conferencia
         }
 
 
+    }
+    if(opcion === 4){
+        console.log('Introduce los criterios de busqueda');
+        console.log('1) Autor');
+        console.log('2) Anyo de publicacion');
+        console.log('3) Tipo de publicacion');
+        console.log('4) Todas las anteriores');
+        let opcionBusqueda = readline.questionInt('Por favor seleccione una de estas opciones: ');
+        let listaResultado = [];
+        switch(opcionBusqueda){
+
+            case 1:
+            let busquedaAutor = readline.question('Por favor introduce el nombre del autor: ');
+            console.log(busquedaAutor);
+            for(let i = 0; i < listaRevista; i++){
+                var revista = listaRevista[i];
+                console.log(revista.autores)
+                if(revista.autores === busquedaAutor){
+                    listaResultado.push(revista[i]);
+                    console.log(listaResultado);
+
+                }
+            }
+            console.log(listaResultado);
+
+            for(let i = 0; i < listaConferencia; i++){
+                if(listaConferencia[i].autor === busquedaAutor){
+                    listaResultado.push(listaConferencia[i]);
+                }
+            }
+            console.log(listaResultado);
+
+            for(let i = 0; i < listaPatentes; i++){
+                if(listaPatentes[i].autor === busquedaAutor){
+                    listaResultado.push(listaPatentes[i]);
+                }
+            }
+            console.log(listaResultado);
+            break;
+            default:
+        }
 
     }
-
-}
+}//Final del while
