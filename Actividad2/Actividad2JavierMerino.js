@@ -457,17 +457,68 @@ while(!salir){
                         } else {
                             console.log('Revista no encontrada');
                         }
-                    }
-
-                            
-                
+                    }   
             }    
         }
+        //Modificar patentes cientificas
         if(opcion === 3){
-            
-        }
+            let titulo = readline.question('Introduce el titulo de la patente: ');
+            var opt = 0;
+            if(listaPatentes.length == 0){
+                console.log('No hay Patentes');
+            }
+                for(let i = 0; i < listaPatentes.length; i++){
+                    var pat = listaPatentes[i];
+                    if(pat.titulo === titulo){  
+                        while(opt != 5){
+                            console.log('¿Que quieres modificar?\n');
+                            console.log('1) Titulo');
+                            console.log('2) Autor');
+                            console.log('3) Anyo de publicacion');
+                            console.log('4) Anyo de vencimiento');        
+                            console.log('5) Salir');
 
+                            opt = readline.questionInt('Por favor seleccione una de estas opciones: ');
+                            switch(opt){
+                                case 1: 
+                                    let nuevoTitulo = readline.question('Introduce el titulo nuevo: ');
+                                    pat.titulo = nuevoTitulo;
+                                    console.log(listaPatentes);
+                                    console.log('Titulo modificado con exito');
+                                break;
+                                case 2:
+                                    let numAutores = readline.question('¿Cuantos autores tiene?');
+                                    let nuevoAutor = [];
+                                    for(let i = 0; i < numAutores; i++){
+                                        nuevoAutor[i] = readline.question('Por favor introduce un autor: ');
+                                    }
+                                    pat.autores = nuevoAutor;
+                                    console.log(listaPatentes);
+                                    console.log('Autor/es modificado/s con exito');
+                                break;
+                                case 3:
+                                    let nuevoAnyoPublicacion = readline.question('Introduce el año de publicacion: ');
+                                   pat.anyoPublicacion = nuevoAnyoPublicacion;
+                                    console.log(listaPatentes);
+                                    console.log('Anyo de publicacion modificado con exito');
+                                    break;
+                                case 4:
+                                    let nuevoAnyoVencimiento = readline.question('Introduce el anyo de vencimiento: ');
+                                    pat.anyoVencimiento = nuevoAnyoVencimiento;
+                                    console.log(listaPatentes);
+                                    console.log('Anyo de vencimiento modificado con exito');
+                                    break;   
+                                default:
+                                    console.log('Saliendo');
+                            
+                            }
+                        }    
 
+                    } else {
+                        console.log('Revista no encontrada');
+                    }
+                }      
+    }
 
     }
     if(opcion === 4){
