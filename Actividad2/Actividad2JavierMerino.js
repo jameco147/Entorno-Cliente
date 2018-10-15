@@ -379,8 +379,94 @@ while(!salir){
                 
                 }
 
-                //Opcion revista en conferencia
+            //Opcion revista en conferencia    
+            if(opcion === 2){
+                let titulo = readline.question('Introduce el titulo del articulo en conferencia: ');
+                var opt = 0;
+                if(listaRevista.length == 0){
+                    console.log('No hay articulos');
+                }
+                    for(let i = 0; i < listaConferencia.length; i++){
+                        var conf = listaConferencia[i];
+                        if(conf.titulo === titulo){  
+                            while(opt != 8){
+                                console.log('¿Que quieres modificar?\n');
+                                console.log('1) Titulo');
+                                console.log('2) Autor');
+                                console.log('3) Numero de paginas');
+                                console.log('4) Anyo de publicacion');
+                                console.log('5) Numero de menciones');        
+                                console.log('6) Nombre de conferencia');
+                                console.log('7) Lugar de celebracion');
+                                console.log('8) Salir');
+
+                                opt = readline.questionInt('Por favor seleccione una de estas opciones: ');
+                                switch(opt){
+                                    case 1: 
+                                        let nuevoTitulo = readline.question('Introduce el titulo nuevo: ');
+                                        conf.titulo = nuevoTitulo;
+                                        console.log(listaConferencia);
+                                        console.log('Titulo modificado con exito');
+                                    break;
+                                    case 2:
+                                        let numAutores = readline.question('¿Cuantos autores tiene?');
+                                        let nuevoAutor = [];
+                                        for(let i = 0; i < numAutores; i++){
+                                            nuevoAutor[i] = readline.question('Por favor introduce un autor: ');
+                                        }
+                                        conf.autores = nuevoAutor;
+                                        console.log(listaConferencia);
+                                        console.log('Autor/es modificado/s con exito');
+                                    break;
+                                    case 3:
+                                        let nuevoNumPaginas = readline.question('Introduce el numero de paginas: ');
+                                        conf.numPaginas = nuevoNumPaginas;
+                                        console.log(listaConferencia);
+                                        console.log('Numero de paginas modificado con exito');
+                                        break;
+                                    case 4:
+                                        let nuevoAnyoPublicacion = readline.question('Introduce el anyo de publicacion: ');
+                                        conf.anyoPublicacion = nuevoAnyoPublicacion;
+                                        console.log(listaConferencia);
+                                        console.log('Anyo de publicacion modificado con exito');
+                                        break;
+                                    case 5:
+                                        let nuevoNumMenciones = readline.question('Introduce el numero de menciones: ');
+                                        conf.numMenciones = nuevoNumMenciones;
+                                        console.log(listaConferencia);
+                                        console.log('Numero de menciones modificado con exito');
+                                        break;
+                                    case 6:
+                                        let nuevoNombreConferencia = readline.question('Introduce el nombre de la conferencia: ');
+                                        conf.nomConferencia = nuevoNombreConferencia;
+                                        console.log(listaConferencia);
+                                        console.log('Nombre de la conferencia modificada con exito');
+                                        break;
+                                    case 7:
+                                        let nuevoLugarCelebracion = readline.question('Introduce el lugar de la celebracion: ');
+                                        conf.lugarCelebracion = nuevoLugarCelebracion;
+                                        console.log(listaConferencia);
+                                        console.log('Lugar de celebracion modificado con exito');
+                                        break;               
+                                    default:
+                                        console.log('Saliendo');
+                                
+                                }
+                            }    
+
+                        } else {
+                            console.log('Revista no encontrada');
+                        }
+                    }
+
+                            
+                
+            }    
         }
+        if(opcion === 3){
+            
+        }
+
 
 
     }
