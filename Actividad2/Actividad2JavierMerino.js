@@ -373,10 +373,7 @@ while(!salir){
                         } else {
                             console.log('Revista no encontrada');
                         }
-                    }
-
-                            
-                
+                    }   
                 }
 
             //Opcion revista en conferencia    
@@ -561,5 +558,35 @@ while(!salir){
             default:
         }
 
+    }
+    if(opcion === 5){
+        let listaResultado = [];
+        
+            let busquedaAutor = readline.question('Por favor introduce el nombre del autor: ');
+            for(let i = 0; i < listaRevista.length; i++){
+                for(let autor of listaRevista[i].autores){
+                    if(autor === busquedaAutor){
+                        listaResultado.push(listaRevista[i]);
+                    }
+                }    
+            }
+            
+            for(let i = 0; i < listaConferencia.length; i++){
+                for(autor of listaConferencia[i].autores){
+                    if(autor === busquedaAutor){
+                        listaResultado.push(listaConferencia[i]);
+                    }
+                }
+            }
+            
+            for(let i = 0; i < listaPatentes.length; i++){
+                for(autor of listaPatentes[i].autores){
+                    if(autor === busquedaAutor){
+                        listaResultado.push(listaPatentes[i]);
+                    }
+                }
+            }
+            console.log(`El número de producciones cientificas para este autor es : ${listaResultado.length}`);
+          
     }
 }//Final del while
