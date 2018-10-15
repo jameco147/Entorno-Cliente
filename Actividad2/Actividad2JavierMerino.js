@@ -397,7 +397,6 @@ while(!salir){
             case 1:
             let busquedaAutor = readline.question('Por favor introduce el nombre del autor: ');
             for(let i = 0; i < listaRevista.length; i++){
-                console.log(listaRevista[i].autores);
                 for(let autor of listaRevista[i].autores){
                     if(autor === busquedaAutor){
                         listaResultado.push(listaRevista[i]);
