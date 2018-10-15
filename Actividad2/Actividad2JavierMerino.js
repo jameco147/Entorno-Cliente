@@ -397,26 +397,27 @@ while(!salir){
             case 1:
             let busquedaAutor = readline.question('Por favor introduce el nombre del autor: ');
             for(let i = 0; i < listaRevista.length; i++){
-                let revista = listaRevista[i];
-                console.log(revista.autores)
-                if(revista.autores === busquedaAutor){
-                    listaResultado.push(revista[i]);
-                    console.log(listaResultado);
-
+                console.log(listaRevista[i].autores);
+                for(let autor of listaRevista[i].autores){
+                    if(autor === busquedaAutor){
+                        listaResultado.push(listaRevista[i]);
+                    }
+                }    
+            }
+            
+            for(let i = 0; i < listaConferencia.length; i++){
+                for(autor of listaConferencia[i].autores){
+                    if(autor === busquedaAutor){
+                        listaResultado.push(listaConferencia[i]);
+                    }
                 }
             }
-            console.log(listaResultado);
-
-            for(let i = 0; i < listaConferencia; i++){
-                if(listaConferencia[i].autor === busquedaAutor){
-                    listaResultado.push(listaConferencia[i]);
-                }
-            }
-            console.log(listaResultado);
-
-            for(let i = 0; i < listaPatentes; i++){
-                if(listaPatentes[i].autor === busquedaAutor){
-                    listaResultado.push(listaPatentes[i]);
+            
+            for(let i = 0; i < listaPatentes.length; i++){
+                for(autor of listaPatentes[i].autores){
+                    if(autor === busquedaAutor){
+                        listaResultado.push(listaPatentes[i]);
+                    }
                 }
             }
             console.log(listaResultado);
