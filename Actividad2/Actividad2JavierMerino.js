@@ -56,12 +56,13 @@ let listaPatentes = [];
 let salir = false; //Bandera o flag para hacer el while.
 
 while(!salir){
-    console.log('\nBienvenidos al sistema de produccion cientifica');
+    console.log('\nBienvenidos al sistema de produccion cientifica\n');
     console.log('1) Dar de alta');
     console.log('2) Dar de baja');
     console.log('3) Modificación');
-    console.log('4) Busqueda')
-    console.log('5) Salir del sistema');
+    console.log('4) Busqueda');
+    console.log('5) Calcular el numero de producciones cientificas');
+    console.log('6) Calcular el factor de impacto acumulado');
     let opcion = readline.questionInt('Por favor seleccione una de estas opciones: ');
 
     //Dar de alta
@@ -559,14 +560,19 @@ while(!salir){
         }
 
     }
+    //Calcular el número de producciones científicas
     if(opcion === 5){
         let listaResultado = [];
+        let encontrado1 = true;
+        let encontrado2 = true;
+        let encontrado3 = true;
         
             let busquedaAutor = readline.question('Por favor introduce el nombre del autor: ');
             for(let i = 0; i < listaRevista.length; i++){
                 for(let autor of listaRevista[i].autores){
                     if(autor === busquedaAutor){
                         listaResultado.push(listaRevista[i]);
+                        encontrado1 = false;
                     }
                 }    
             }
@@ -575,6 +581,7 @@ while(!salir){
                 for(autor of listaConferencia[i].autores){
                     if(autor === busquedaAutor){
                         listaResultado.push(listaConferencia[i]);
+                        encontrado2 = false;
                     }
                 }
             }
@@ -583,10 +590,41 @@ while(!salir){
                 for(autor of listaPatentes[i].autores){
                     if(autor === busquedaAutor){
                         listaResultado.push(listaPatentes[i]);
+                        encontrado3 = false;
                     }
                 }
             }
-            console.log(`El número de producciones cientificas para este autor es : ${listaResultado.length}`);
+            if(encontrado1 && encontrado2 && encontrado3){
+                console.log('El autor no esta registrado');
+            } else {
+                console.log(`El número de producciones cientificas para este autor es de : ${listaResultado.length}`);
+            }
+
+           
           
     }
+    //Calcular el factor de impacto
+    if(opcion === 6){
+        let busquedaAutor = readline.question('Por favor introduce el nombre del autor: ');
+        let resultadoFactorImpacto = 0;
+        let encontrado = false;
+
+        for(let i = 0; i < listaRevista.length; i++){
+            for(let autor of listaRevista[i].autores){
+                if(autor === busquedaAutor){
+                    resultadoFactorImpacto = listaRevista[i].factorImpacto + resultadoFactorImpacto;
+                    encontrado = true;
+                }
+            }
+        }
+        if(encontrado){
+            console.log(`El factor de impacto para este autor es de: ${resultadoFactorImpacto}`);
+        } else {
+            console.log('El autor no está registrado');
+        }
+        
+        
+
+    }
+
 }//Final del while
