@@ -105,7 +105,7 @@ while(!salir){
                         autor[i] = readline.question('Por favor introduce un autor: ');
                     }
                     let numPaginas = readline.question('Por favor introduce una numero de paginas: ');
-                    let anyoPublicacion = readline.question('Por favor introduce un anyo de publicacion: ');
+                    let anyoPublicacion = readline.questionInt('Por favor introduce un anyo de publicacion: ');
                     let numMenciones = readline.question('Por favor introduce un numero de menciones: ');
                     let editorial = readline.question('Por favor introduce una editorial: ');
                     let factorImpacto = readline.questionFloat('Por favor introduce factor de impacto: ');
@@ -132,7 +132,7 @@ while(!salir){
                         autor[i] = readline.question('Por favor introduce un autor: ');
                     }
                     let numPaginas = readline.question('Por favor introduce una numero de paginas: ');
-                    let anyoPublicacion = readline.question('Por favor introduce un anyo de publicacion: ');
+                    let anyoPublicacion = readline.questionInt('Por favor introduce un anyo de publicacion: ');
                     let numMenciones = readline.question('Por favor introduce un numero de menciones: ');
                     let nomConferencia = readline.question('Por favor introduce el nombre de la conferencia: ');
                     let lugarCelebracion = readline.question('Por favor introduce el lugar de la celebracion: ');
@@ -160,7 +160,7 @@ while(!salir){
                     autor[i] = readline.question('Por favor introduce un autor: ');
                 }
                    
-                let anyoPublicacion = readline.question('Por favor introduce un anyo de publicacion: ');
+                let anyoPublicacion = readline.questionInt('Por favor introduce un anyo de publicacion: ');
                 let anyoVencimiento = readline.question('Por favor introduce un anyo de vencimiento: ');
                 let newPatente = new PatenteCientifica(titulo,autor, anyoPublicacion,anyoVencimiento);
                 listaPatentes.push(newPatente);
@@ -568,34 +568,35 @@ while(!salir){
         let encontrado3 = true;
         
             let busquedaAutor = readline.question('Por favor introduce el nombre del autor: ');
-            for(let i = 0; i < listaRevista.length; i++){
-                for(let autor of listaRevista[i].autores){
-                    if(autor === busquedaAutor){
-                        listaResultado.push(listaRevista[i]);
-                        encontrado1 = false;
-                    }
-                }    
-            }
+            let anyos = 2018 - readline.questionInt('¿Desde hace cuantos anyos: ?');
             
-            for(let i = 0; i < listaConferencia.length; i++){
-                for(autor of listaConferencia[i].autores){
-                    if(autor === busquedaAutor){
-                        listaResultado.push(listaConferencia[i]);
-                        encontrado2 = false;
-                    }
+
+        
+            for(let autor of listaRevista){
+                if(autor.autores == busquedaAutor && anyos <= autor.anyoPublicacion){
+                    listaResultado.push(listaRevista);
+                    encontrado1 = false;
+                }
+            }    
+            
+            
+            for(let autor of listaConferencia){
+                if(autor.autores == busquedaAutor && anyos <= autor.anyoPublicacion){
+                    listaResultado.push(listaConferencia);
+                    encontrado2 = false;
                 }
             }
             
-            for(let i = 0; i < listaPatentes.length; i++){
-                for(autor of listaPatentes[i].autores){
-                    if(autor === busquedaAutor){
-                        listaResultado.push(listaPatentes[i]);
-                        encontrado3 = false;
-                    }
+            
+            for(let autor of listaPatentes){
+                if(autor.autores == busquedaAutor && anyos <= autor.anyoPublicacion){
+                    listaResultado.push(listaPatentes);
+                    encontrado3 = false;
                 }
             }
+            
             if(encontrado1 && encontrado2 && encontrado3){
-                console.log('El autor no esta registrado');
+                console.log('No hay datos');
             } else {
                 console.log(`El número de producciones cientificas para este autor es de : ${listaResultado.length}`);
             }
