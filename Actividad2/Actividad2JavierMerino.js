@@ -54,6 +54,28 @@ let listaConferencia = [];
 let listaRevista = [];
 let listaPatentes = [];
 let salir = false; //Bandera o flag para hacer el while.
+var buscandoAutor = "";
+var busquedaAnyoPublicacion = "";
+
+
+function busqueda(elemento){
+    
+    if (buscandoAutor.length > 0 && busquedaAnyoPublicacion.length > 0) {
+        if(elemento.autores == buscandoAutor && elemento.anyoPublicacion == busquedaAnyoPublicacion){
+            return elemento;
+        }
+    } else if (buscandoAutor.length > 0){
+        if(elemento.autores == buscandoAutor){
+            return elemento;
+        }
+    } else if (busquedaAnyoPublicacion.length > 0) {
+        if(elemento.anyoPublicacion == busquedaAnyoPublicacion){
+            return elemento;
+        }
+    } else {
+        console.log('Error, los parametros introducidos son invalidos');
+    }  
+}
 
 while(!salir){
     console.log('\nBienvenidos al sistema de produccion cientifica\n');
@@ -520,45 +542,40 @@ while(!salir){
 
     }
     if(opcion === 4){
-        console.log('Introduce los criterios de busqueda');
-        console.log('1) Autor');
-        console.log('2) Anyo de publicacion');
-        console.log('3) Tipo de publicacion');
-        console.log('4) Todas las anteriores');
-        let opcionBusqueda = readline.questionInt('Por favor seleccione una de estas opciones: ');
-        let listaResultado = [];
-        switch(opcionBusqueda){
+        let salir = false;
+        while(!salir){
+            console.log('¿Que criterios de busqueda deseas utilizar?');
+            console.log('1) Busquedas por revistas');
+            console.log('2) Busqueda por articulos en conferencia');
+            console.log('3) Busqueda por patentes cientificas');
+        
+            let tipoBusqueda = readline.questionInt('Introduce el tipo de busqueda: ');
+            buscandoAutor = readline.question('Introduce el autor: ');
+            busquedaAnyoPublicacion = readline.question('Introduce el anyo de publicacion: ');
 
-            case 1:
-            let busquedaAutor = readline.question('Por favor introduce el nombre del autor: ');
-            for(let i = 0; i < listaRevista.length; i++){
-                for(let autor of listaRevista[i].autores){
-                    if(autor === busquedaAutor){
-                        listaResultado.push(listaRevista[i]);
-                    }
-                }    
+            if (tipoBusqueda === 1) {
+                let prueba = listaRevista.filter(busqueda);
+                console.log(prueba);
+            } else if(tipoBusqueda === 2) {
+                let prueba = listaConferencia.filter(busqueda);
+                console.log(prueba);
+            } else if(tipoBusqueda === 3){
+                let prueba = listaPatentes.filter(busqueda);
+                console.log(prueba);
+            } else {
+                console.log('El numero introducido no es valido');
+                
             }
-            
-            for(let i = 0; i < listaConferencia.length; i++){
-                for(autor of listaConferencia[i].autores){
-                    if(autor === busquedaAutor){
-                        listaResultado.push(listaConferencia[i]);
-                    }
-                }
-            }
-            
-            for(let i = 0; i < listaPatentes.length; i++){
-                for(autor of listaPatentes[i].autores){
-                    if(autor === busquedaAutor){
-                        listaResultado.push(listaPatentes[i]);
-                    }
-                }
-            }
-            console.log(listaResultado);
-            break;
-            default:
+            console.log('¿Desea salir del programa?');
+            console.log('1) Si');
+            console.log('2) No');
+            let opcion = readline.questionInt('Por favor seleccione una opcion: ');
+            if(opcion === 1){
+                salir = true;
+            } else {
+                salir = false;
+            }            
         }
-
     }
     //Calcular el número de producciones científicas
     if(opcion === 5){
