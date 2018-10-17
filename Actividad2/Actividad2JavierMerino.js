@@ -568,7 +568,7 @@ while(!salir){
         let encontrado3 = true;
         
             let busquedaAutor = readline.question('Por favor introduce el nombre del autor: ');
-            let anyos = 2018 - readline.questionInt('¿Desde hace cuantos anyos: ?');
+            let anyos = 2018 - readline.questionInt('¿Desde hace cuantos anyos?: ');
             
 
         
@@ -607,21 +607,22 @@ while(!salir){
     //Calcular el factor de impacto
     if(opcion === 6){
         let busquedaAutor = readline.question('Por favor introduce el nombre del autor: ');
+        let anyos = 2018 - readline.questionInt('¿Desde hace cuantos anyos?: ');
         let resultadoFactorImpacto = 0;
         let encontrado = false;
 
-        for(let i = 0; i < listaRevista.length; i++){
-            for(let autor of listaRevista[i].autores){
-                if(autor === busquedaAutor){
-                    resultadoFactorImpacto = listaRevista[i].factorImpacto + resultadoFactorImpacto;
-                    encontrado = true;
-                }
+        
+        for(let autor of listaRevista){
+            if(autor.autores == busquedaAutor && anyos <= autor.anyoPublicacion){
+                resultadoFactorImpacto = autor.factorImpacto + resultadoFactorImpacto;
+                encontrado = true;
             }
         }
+        
         if(encontrado){
             console.log(`El factor de impacto para este autor es de: ${resultadoFactorImpacto}`);
         } else {
-            console.log('El autor no está registrado');
+            console.log('No hay datos');
         }
         
         
