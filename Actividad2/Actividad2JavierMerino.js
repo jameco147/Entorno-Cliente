@@ -85,6 +85,7 @@ while(!salir){
     console.log('4) Busqueda');
     console.log('5) Calcular el numero de producciones cientificas');
     console.log('6) Calcular el factor de impacto acumulado');
+    console.log('8) Salir');
     let opcion = readline.questionInt('Por favor seleccione una de estas opciones: ');
 
     //Dar de alta
@@ -128,10 +129,10 @@ while(!salir){
                     }
                     let numPaginas = readline.question('Por favor introduce una numero de paginas: ');
                     let anyoPublicacion = readline.questionInt('Por favor introduce un anyo de publicacion: ');
-                    let numMenciones = readline.question('Por favor introduce un numero de menciones: ');
+                    let numMenciones = readline.questionInt('Por favor introduce un numero de menciones: ');
                     let editorial = readline.question('Por favor introduce una editorial: ');
                     let factorImpacto = readline.questionFloat('Por favor introduce factor de impacto: ');
-                    let newArticuloRevista = new ArticulosRevista(titulo, autor,numPaginas,anyoPublicacion, editorial, numMenciones,factorImpacto);
+                    let newArticuloRevista = new ArticulosRevista(titulo, autor,numPaginas,anyoPublicacion,numMenciones,editorial,factorImpacto);
                     listaRevista.push(newArticuloRevista);
                     console.log(listaRevista);
                     console.log('Registro con exito');
@@ -155,7 +156,7 @@ while(!salir){
                     }
                     let numPaginas = readline.question('Por favor introduce una numero de paginas: ');
                     let anyoPublicacion = readline.questionInt('Por favor introduce un anyo de publicacion: ');
-                    let numMenciones = readline.question('Por favor introduce un numero de menciones: ');
+                    let numMenciones = readline.questionInt('Por favor introduce un numero de menciones: ');
                     let nomConferencia = readline.question('Por favor introduce el nombre de la conferencia: ');
                     let lugarCelebracion = readline.question('Por favor introduce el lugar de la celebracion: ');
                     let newArticuloConferencia = new ArticulosConferencia(titulo,autor,numPaginas,anyoPublicacion,numMenciones,nomConferencia,lugarCelebracion);
@@ -213,8 +214,9 @@ while(!salir){
             for(let i = 0; i < listaAutor.length; i++){
                 let autor = listaAutor[i];
                 if(autor.nombre === opcion){
-                    listaAutor.splice(i);
+                    listaAutor.splice(i,1);
                     console.log(listaAutor);
+                    console.log('Autor dado de baja con exito');
                     break;
                 }      
             }           
@@ -230,7 +232,7 @@ while(!salir){
                 for(let i = 0; i < listaRevista.length; i++){
                     let revista = listaRevista[i];
                     if(revista.titulo === opcion){
-                        listaRevista.splice(i);
+                        listaRevista.splice(i,1);
                         console.log(listaRevista);
                         console.log('Articulo dado de baja con exito');
                         break;
@@ -242,7 +244,7 @@ while(!salir){
                 for(let i = 0; i < listaConferencia.length; i++){
                     let conferencia = listaConferencia[i];
                     if(conferencia.titulo === opcion){
-                        listaConferencia.splice(i);
+                        listaConferencia.splice(i,1);
                         console.log('Articulo dado de baja con exito');
                         break;
                     } 
@@ -255,7 +257,7 @@ while(!salir){
             for(let i = 0; i < listaPatentes.length; i++){
                 let patente = listaPatentes[i];
                 if(patente.titulo === opcion){
-                    listaPatentes.splice(i);
+                    listaPatentes.splice(i,1);
                     console.log(listaPatentes);
                     console.log('Patente dada de baja con exito');
                     break;
@@ -364,13 +366,13 @@ while(!salir){
                                         console.log('Numero de paginas modificado con exito');
                                         break;
                                     case 4:
-                                        let nuevoAnyoPublicacion = readline.question('Introduce el anyo de publicacion: ');
+                                        let nuevoAnyoPublicacion = readline.questionInt('Introduce el anyo de publicacion: ');
                                         revista.anyoPublicacion = nuevoAnyoPublicacion;
                                         console.log(listaRevista);
                                         console.log('Anyo de publicacion modificado con exito');
                                         break;
                                     case 5:
-                                        let nuevoNumMenciones = readline.question('Introduce el numero de menciones: ');
+                                        let nuevoNumMenciones = readline.questionInt('Introduce el numero de menciones: ');
                                         revista.numMenciones = nuevoNumMenciones;
                                         console.log(listaRevista);
                                         console.log('Numero de menciones modificado con exito');
@@ -382,7 +384,7 @@ while(!salir){
                                         console.log('Editorial modificada con exito');
                                         break;
                                     case 7:
-                                        let nuevoFactorImpacto = readline.question('Introduce el factor de impacto: ');
+                                        let nuevoFactorImpacto = readline.questionInt('Introduce el factor de impacto: ');
                                         revista.factorImpacto = nuevoFactorImpacto;
                                         console.log(listaRevista);
                                         console.log('Factor de impacto modificado con exito');
@@ -445,13 +447,13 @@ while(!salir){
                                         console.log('Numero de paginas modificado con exito');
                                         break;
                                     case 4:
-                                        let nuevoAnyoPublicacion = readline.question('Introduce el anyo de publicacion: ');
+                                        let nuevoAnyoPublicacion = readline.questionInt('Introduce el anyo de publicacion: ');
                                         conf.anyoPublicacion = nuevoAnyoPublicacion;
                                         console.log(listaConferencia);
                                         console.log('Anyo de publicacion modificado con exito');
                                         break;
                                     case 5:
-                                        let nuevoNumMenciones = readline.question('Introduce el numero de menciones: ');
+                                        let nuevoNumMenciones = readline.questionInt('Introduce el numero de menciones: ');
                                         conf.numMenciones = nuevoNumMenciones;
                                         console.log(listaConferencia);
                                         console.log('Numero de menciones modificado con exito');
@@ -644,6 +646,26 @@ while(!salir){
         
         
 
+    }
+
+    if(opcion === 7){
+
+        let listadoMenciones = [];
+        
+        for(let i = 0; i < listaRevista.length; i++){
+            let menciones = listaRevista[i].numMenciones;
+            listadoMenciones.push(menciones);
+        }
+        console.log(listadoMenciones);
+
+
+
+
+
+    }
+
+    if(opcion === 8){
+        salir = true;
     }
 
 }//Final del while
