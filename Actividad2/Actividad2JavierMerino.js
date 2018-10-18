@@ -781,9 +781,9 @@ while(!salir){
         for(let i = 0; i < listadoMencionesOrdenado.length; i++ ){
             if(listadoMencionesOrdenado[i] >= i){
                 indiceH = i+1;
-                console.log(`Dentro del if ${indiceH}`);
+                //console.log(`Dentro del if ${indiceH}`);
             } else {
-                console.log('Estoy en else');
+                //console.log('Estoy en else');
                 break;     
             }
         }
