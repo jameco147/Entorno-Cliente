@@ -650,17 +650,45 @@ while(!salir){
 
     if(opcion === 7){
 
+        let introduceAutor = readline.question('Introduce el autor del que quieras saber el indice h: ');
         let listadoMenciones = [];
         
         for(let i = 0; i < listaRevista.length; i++){
-            let menciones = listaRevista[i].numMenciones;
-            listadoMenciones.push(menciones);
+            let autor = listaRevista[i].autores;
+            if(autor == introduceAutor){
+                let menciones = listaRevista[i].numMenciones;
+                listadoMenciones.push(menciones);
+            }
         }
-        console.log(listadoMenciones);
 
+        for(let i = 0; i < listaConferencia.length; i++){
+            let autor = listaRevista[i].autores;
+            if(autor == introduceAutor){
+                let menciones = listaConferencia[i].numMenciones;
+                listadoMenciones.push(menciones);
+            }
+        }
+        //En esta función ordeo de mayor a menor el número de menciones
+        function Ordenar() {
+            listadoMenciones.sort(function(a, b){return b-a});
+            return listadoMenciones;
+        }
 
+        listadoMencionesOrdenado = Ordenar();
+        //console.log(listadoMencionesOrdenado);
 
+        let indiceH = undefined;
+        for(let i = 0; i < listadoMencionesOrdenado.length; i++ ){
+            if(listadoMencionesOrdenado[i] >= i){
+                indiceH = i+1;
+                console.log(`Dentro del if ${indiceH}`);
+            } else {
+                console.log('Estoy en else');
+                break;     
+            }
+        }
 
+        console.log(`El indice h final es ${indiceH}`);
 
     }
 
