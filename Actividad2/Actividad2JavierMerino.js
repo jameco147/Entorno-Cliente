@@ -20,7 +20,7 @@ class Publicaciones {
      * @param {String} titulo 
      * @param  {Array} autores 
      */
-    constructor(titulo,...autores){
+    constructor(titulo,autores){
         this.titulo = titulo;
         this.autores = autores;
     }
@@ -36,7 +36,7 @@ class ArticulosCientíficos extends Publicaciones {
      * @param {Integer} numMenciones 
      */
     constructor(titulo,autores,numPaginas,anyoPublicacion,numMenciones){
-        super(titulo,...autores);
+        super(titulo,autores);
         this.numPaginas = numPaginas;
         this.anyoPublicacion = anyoPublicacion;
         this.numMenciones = numMenciones;
@@ -88,7 +88,7 @@ class PatenteCientifica extends Publicaciones {
      * @param {String} anyoVencimiento 
      */
     constructor(titulo,autores,anyoPublicacion,anyoVencimiento){
-        super(titulo,...autores);
+        super(titulo,autores);
         this.anyoPublicacion = anyoPublicacion;
         this.anyoVencimiento = anyoVencimiento;
     }
@@ -130,6 +130,7 @@ while(!salir){
     console.log('4) Busqueda');
     console.log('5) Calcular el numero de producciones cientificas');
     console.log('6) Calcular el factor de impacto acumulado');
+    console.log('7) Calcular el indice h');
     console.log('8) Salir');
     let opcion = readline.questionInt('Por favor seleccione una de estas opciones: ');
 
@@ -141,9 +142,10 @@ while(!salir){
         console.log('3) Patentes cientificas');
         let opcion = readline.questionInt('Por favor seleccione una de estas opciones: ');
 
+            //Dar de autores
             if(opcion === 1){
                 let nombre = readline.question('Por favor introduce un nombre: ');
-                let apellidos = readline.question('Por favir introduce los apellidos: ');
+                let apellidos = readline.question('Por favor introduce los apellidos: ');
                 let newAutor = new Autor(nombre,apellidos);
                 listaAutor.push(newAutor);
                 console.log(listaAutor);
@@ -159,6 +161,7 @@ while(!salir){
                 }      
             }
 
+            //Dar de alta artículos científicos
             if(opcion === 2){
                 console.log('¿Que tipo de articulo desea registrar');
                 console.log('1) Articulo de revista');
@@ -220,6 +223,7 @@ while(!salir){
                 }                
             }
             
+            //Dar de alta patentes cientificas
             if(opcion === 3){
                 let titulo = readline.question('Por favor introduce un titulo: ');
                 let numAutores = readline.question('¿Cuantos autores tiene?');
@@ -247,7 +251,7 @@ while(!salir){
 
     }
     //Dar de baja
-    if(opcion === 2){
+    else if(opcion === 2){
         console.log('¿Que quieres dar de baja?\n');
         console.log('1) Autores');
         console.log('2) Articulos cientificos');
@@ -311,7 +315,7 @@ while(!salir){
         }
     }
     //Modificación
-    if(opcion === 3){
+    else if(opcion === 3){
         console.log('¿Que quieres modificar?\n');
         console.log('1) Autores');
         console.log('2) Articulos cientificos');
@@ -446,7 +450,7 @@ while(!salir){
                     }   
                 }
 
-            //Opcion revista en conferencia    
+            //Modificar articulo en conferencia en conferencia    
             if(opcion === 2){
                 let titulo = readline.question('Introduce el titulo del articulo en conferencia: ');
                 var opt = 0;
@@ -588,7 +592,7 @@ while(!salir){
     }
 
     }
-    if(opcion === 4){
+    else if(opcion === 4){
         let salir = false;
         while(!salir){
             console.log('¿Que criterios de busqueda deseas utilizar?');
@@ -625,7 +629,7 @@ while(!salir){
         }
     }
     //Calcular el número de producciones científicas
-    if(opcion === 5){
+    else if(opcion === 5){
         let listaResultado = [];
         let encontrado1 = true;
         let encontrado2 = true;
@@ -705,7 +709,7 @@ while(!salir){
           
     }
     //Calcular el factor de impacto
-    if(opcion === 6){
+    else if(opcion === 6){
         let busquedaAutor = readline.question('Por favor introduce el nombre del autor: ');
         let anyos = 2018 - readline.questionInt('¿Desde hace cuantos anyos?: ');
         let resultadoFactorImpacto = 0;
@@ -729,7 +733,7 @@ while(!salir){
 
     }
 
-    if(opcion === 7){
+    else if(opcion === 7){
 
         let introduceAutor = readline.question('Introduce el autor del que quieras saber el indice h: ');
         let listadoMenciones = [];
@@ -773,7 +777,7 @@ while(!salir){
 
     }
 
-    if(opcion === 8){
+    else if(opcion === 8){
         salir = true;
     }
 
