@@ -605,14 +605,14 @@ while(!salir){
             busquedaAnyoPublicacion = readline.question('Introduce el anyo de publicacion: ');
 
             if (tipoBusqueda === 1) {
-                let prueba = listaRevista.filter(busqueda);
-                console.log(prueba);
+                let resul = listaRevista.filter(busqueda);
+                console.log(resul);
             } else if(tipoBusqueda === 2) {
-                let prueba = listaConferencia.filter(busqueda);
-                console.log(prueba);
+                let resul = listaConferencia.filter(busqueda);
+                console.log(resul);
             } else if(tipoBusqueda === 3){
-                let prueba = listaPatentes.filter(busqueda);
-                console.log(prueba);
+                let resul = listaPatentes.filter(busqueda);
+                console.log(resul);
             } else {
                 console.log('El numero introducido no es valido');
                 
@@ -738,21 +738,36 @@ while(!salir){
         let introduceAutor = readline.question('Introduce el autor del que quieras saber el indice h: ');
         let listadoMenciones = [];
         
-        for(let i = 0; i < listaRevista.length; i++){
-            let autor = listaRevista[i].autores;
-            if(autor == introduceAutor){
-                let menciones = listaRevista[i].numMenciones;
+        //En estos dos ciclos for busco que el autor introducido por el usuario esté en los arrays de listaRevista
+        // y listaConferencia. Si el autor está, introduzco su número de menciones en el array listadoMenciones
+        for(let autor of listaRevista){
+            let flag = undefined;
+            for(let aut of autor.autores){
+                if(aut === introduceAutor){
+                flag = true;       
+                }
+            }
+            if(flag){
+                let menciones = autor.numMenciones;
+                listadoMenciones.push(menciones);
+            } 
+        }
+
+        for(let autor of listaConferencia){
+            let flag = undefined;
+            for(let aut of autor.autores){
+                if(aut === introduceAutor){
+                flag = true;        
+                }
+            }
+            if(flag){
+                let menciones = autor.numMenciones;
                 listadoMenciones.push(menciones);
             }
         }
 
-        for(let i = 0; i < listaConferencia.length; i++){
-            let autor = listaRevista[i].autores;
-            if(autor == introduceAutor){
-                let menciones = listaConferencia[i].numMenciones;
-                listadoMenciones.push(menciones);
-            }
-        }
+
+        
         //En esta función ordeo de mayor a menor el número de menciones
         function OrdenAscendente() {
             listadoMenciones.sort(function(a, b){return b-a});
