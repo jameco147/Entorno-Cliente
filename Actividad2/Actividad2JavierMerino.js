@@ -2,6 +2,11 @@ var readline = require('readline-sync');
 
 
 class Autor {
+    /**
+     * 
+     * @param {String} nombre 
+     * @param {String} apellidos 
+     */
     constructor(nombre, apellidos){
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -10,6 +15,11 @@ class Autor {
 
 
 class Publicaciones {
+    /**
+     * 
+     * @param {String} titulo 
+     * @param  {Array} autores 
+     */
     constructor(titulo,...autores){
         this.titulo = titulo;
         this.autores = autores;
@@ -17,6 +27,14 @@ class Publicaciones {
 }
 
 class ArticulosCientíficos extends Publicaciones {
+    /**
+     * 
+     * @param {String} titulo 
+     * @param {Array} autores 
+     * @param {String} numPaginas 
+     * @param {Integer} anyoPublicacion 
+     * @param {Integer} numMenciones 
+     */
     constructor(titulo,autores,numPaginas,anyoPublicacion,numMenciones){
         super(titulo,...autores);
         this.numPaginas = numPaginas;
@@ -26,6 +44,16 @@ class ArticulosCientíficos extends Publicaciones {
 }
 
 class ArticulosRevista extends ArticulosCientíficos {
+    /**
+     * 
+     * @param {String} titulo 
+     * @param {Array} autores 
+     * @param {String} numPaginas 
+     * @param {Integer} anyoPublicacion 
+     * @param {Integer} numMenciones 
+     * @param {String} editorial 
+     * @param {Integer} factorImpacto 
+     */
     constructor(titulo,autores,numPaginas,anyoPublicacion,numMenciones,editorial,factorImpacto){
         super(titulo,autores,numPaginas,anyoPublicacion,numMenciones);
         this.editorial = editorial;
@@ -34,6 +62,16 @@ class ArticulosRevista extends ArticulosCientíficos {
 }
 
 class ArticulosConferencia extends ArticulosCientíficos {
+    /**
+     * 
+     * @param {String} titulo 
+     * @param {Array} autores 
+     * @param {String} numPaginas 
+     * @param {Integer} anyoPublicacion 
+     * @param {Integer} numMenciones 
+     * @param {String} nomConferencia 
+     * @param {String} lugarCelebracion 
+     */
     constructor(titulo,autores,numPaginas,anyoPublicacion,numMenciones,nomConferencia,lugarCelebracion){
         super(titulo,autores,numPaginas,anyoPublicacion,numMenciones);
         this.nomConferencia = nomConferencia;
@@ -42,6 +80,13 @@ class ArticulosConferencia extends ArticulosCientíficos {
 }
 
 class PatenteCientifica extends Publicaciones {
+    /**
+     * 
+     * @param {String} titulo 
+     * @param {Array} autores 
+     * @param {Integer} anyoPublicacion 
+     * @param {String} anyoVencimiento 
+     */
     constructor(titulo,autores,anyoPublicacion,anyoVencimiento){
         super(titulo,...autores);
         this.anyoPublicacion = anyoPublicacion;
@@ -590,34 +635,70 @@ while(!salir){
             let anyos = 2018 - readline.questionInt('¿Desde hace cuantos anyos?: ');
             
 
-        
+            /*En este for estoy comprobando que el autor introducido está en el array de listaRevista y que el año sea menor igual que 
+            el año de publicacion, si cumple estas dos codiciones introduzco los datos en un array nuevo llamado listaResultado*/
             for(let autor of listaRevista){
-                if(autor.autores == busquedaAutor && anyos <= autor.anyoPublicacion){
+                let flag = undefined;
+                for(let aut of autor.autores){
+                    if(aut === busquedaAutor){
+                        encontrado1 = false;
+                        flag = true;
+                    }
+                }
+                if(anyos <= autor.anyoPublicacion){
+                    flag = true;
+                } else {
+                    flag = false;
+                }
+                if (flag) {
                     listaResultado.push(listaRevista);
-                    encontrado1 = false;
                 }
             }    
             
-            
+             /*En este for estoy comprobando que el autor introducido está en el array de listaConferencia y que el año sea menor igual que 
+            el año de publicacion, si cumple estas dos codiciones introduzco los datos en un array nuevo llamado listaResultado*/
             for(let autor of listaConferencia){
-                if(autor.autores == busquedaAutor && anyos <= autor.anyoPublicacion){
+                let flag = undefined;
+                for(let aut of autor.autores){
+                    if(aut === busquedaAutor){
+                        encontrado2 = false;
+                        flag = true; 
+                    }
+                }
+                if(anyos <= autor.anyoPublicacion){
+                    flag = true;
+                } else {
+                    flag = false;
+                }
+                if (flag) {
                     listaResultado.push(listaConferencia);
-                    encontrado2 = false;
                 }
             }
             
-            
+             /*En este for estoy comprobando que el autor introducido está en el array de listaPatentes y que el año sea menor igual que 
+            el año de publicacion, si cumple estas dos codiciones introduzco los datos en un array nuevo llamado listaResultado*/
             for(let autor of listaPatentes){
-                if(autor.autores == busquedaAutor && anyos <= autor.anyoPublicacion){
+                let flag = undefined;
+                for(let aut of autor.autores){
+                    if(aut === busquedaAutor){
+                        encontrado2 = false;
+                        flag = true; 
+                    }
+                }
+                if(anyos <= autor.anyoPublicacion){
+                    flag = true;
+                } else {
+                    flag = false;
+                }
+                if (flag) {
                     listaResultado.push(listaPatentes);
-                    encontrado3 = false;
                 }
             }
             
             if(encontrado1 && encontrado2 && encontrado3){
                 console.log('No hay datos');
             } else {
-                console.log(`El número de producciones cientificas para este autor es de : ${listaResultado.length}`);
+                console.log(`El número de producciones cientificas para este autor en los ultimos años es de : ${listaResultado.length}`);
             }
 
            
@@ -669,12 +750,12 @@ while(!salir){
             }
         }
         //En esta función ordeo de mayor a menor el número de menciones
-        function Ordenar() {
+        function OrdenAscendente() {
             listadoMenciones.sort(function(a, b){return b-a});
             return listadoMenciones;
         }
 
-        listadoMencionesOrdenado = Ordenar();
+        listadoMencionesOrdenado = OrdenAscendente();
         //console.log(listadoMencionesOrdenado);
 
         let indiceH = undefined;
