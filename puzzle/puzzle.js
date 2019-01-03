@@ -189,7 +189,67 @@ function drawContentPuzzle(arrayMovements){
        
         document.getElementById('piece'+[i]).style.backgroundPosition = arrayMovements[i][0] +'px ' + arrayMovements[i][1] + 'px';
               
-    }    
+    }   
 }
 
-drawContentPuzzle(createReferenceSolution(958,1277,9));
+//drawContentPuzzle(createReferenceSolution(958,1277,9));
+
+//5. Lógica del juego
+
+
+function checkIfSolution(position, solution){
+    for (let i = 0; i < position.length; i++) {
+        let piece = document.getElementById("piece"+[i]);
+        let positionX = parseInt(piece.style.backgroundPositionX);
+        let positionY = parseInt(piece.style.backgroundPositionY);
+        //console.log(piece);
+        console.log(positionX);
+        console.log(positionY);
+
+        let resul = solution[i];
+        let resulX = parseInt(resul[0]);
+        let resulY = parseInt(resul[1]);
+        console.log(resulX);
+        console.log(resulY);
+         
+        
+
+        if(positionX === resulX && positionY === resulY){
+            console.log('Puzzle terminado');        
+        } else {
+            console.log('Puzzle no terminado');
+        }
+    }
+}
+
+//let testArray = [150,20];
+//checkIfSolution(createReferenceSolution(958,1277,9), createReferenceSolution(958,1277,9));
+
+function initGame(imageURL,numberOfPieces){
+    let img = new Image();
+    img.addEventListener('load',function(){
+        gameLogic(img,numberOfPieces);
+    });
+    img.src = imageURL;
+}
+
+
+function gameLogic(image,numberOfPieces){
+    let height = image.height;
+    let width = image.width;
+    console.log(image);
+    let img = image.src.split('/');
+    let lastPositionImg = img[img.length-1];
+    console.log(lastPositionImg);
+   
+    
+    let desplazamientos = createReferenceSolution(width,height,numberOfPieces);
+    console.log(desplazamientos);
+    //createPuzzleLayout(numberOfPieces,width,height,lastPositionImg);
+    let barajado = shuffle(desplazamientos);
+    
+    //createPuzzleLayout(9,958,1277,'cat.jpg');
+    drawContentPuzzle(desplazamientos);
+}
+
+initGame('cat.jpg',9);
