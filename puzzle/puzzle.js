@@ -121,7 +121,7 @@ function createPuzzleLayout(numberOfPieces, width, height, direction){
     //Raiz cuadrada del número de piezas introducidas.
     let piecesSqrt = Math.sqrt(numberOfPieces);
     //Posición dentro del HTML donde se va a situar la tabla.
-    let positionTable = document.body.lastChild.previousElementSibling;
+    let positionTable = document.body.lastChild.previousElementSibling.previousElementSibling;
     //Creación de la tabla con su correspondiente ID.
     let table = document.createElement('TABLE');
     table.setAttribute("id","myTable");
@@ -150,7 +150,7 @@ function createPuzzleLayout(numberOfPieces, width, height, direction){
     }
 }
 
-createPuzzleLayout(9,958,1277,'cat.jpg');
+//createPuzzleLayout(9,958,1277,'cat.jpg');
 
 function pieceToOffset(piece,width,height,numberPieces){
     let newArray = [];
@@ -235,6 +235,7 @@ function initGame(imageURL,numberOfPieces){
 
 
 function gameLogic(image,numberOfPieces){
+    console.log('hola');
     let height = image.height;
     let width = image.width;
     console.log(image);
@@ -242,14 +243,29 @@ function gameLogic(image,numberOfPieces){
     let lastPositionImg = img[img.length-1];
     console.log(lastPositionImg);
    
-    
+    console.log(height,width,numberOfPieces);
     let desplazamientos = createReferenceSolution(width,height,numberOfPieces);
     console.log(desplazamientos);
-    //createPuzzleLayout(numberOfPieces,width,height,lastPositionImg);
-    let barajado = shuffle(desplazamientos);
-    
-    //createPuzzleLayout(9,958,1277,'cat.jpg');
+    shuffle(desplazamientos);
+    createPuzzleLayout(numberOfPieces,width,height,lastPositionImg);
     drawContentPuzzle(desplazamientos);
+
+    let cols = document.getElementsByTagName('td');
+    
+    //col.style.border = '3px solid red';  
+
+    for (let i = 0; i < cols.length; i++) {
+        col[i].addEventListener('click',f);
+        
+    }
+
+    console.log(cols);
+
+
+    
+
+    
+
 }
 
 initGame('cat.jpg',9);
