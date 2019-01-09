@@ -29,7 +29,7 @@ function getNumberPiecesFromUser(){
  * 
  * @param {Integer} numberOfPieces 
  */
-function getMaXScore(numberOfPieces){
+function getMaxScore(numberOfPieces){
     let maxScore = numberOfPieces * 2;
     return maxScore;
 }
@@ -237,6 +237,7 @@ function initGame(imageURL,numberOfPieces){
 
 function gameLogic(image,numberOfPieces){
     console.log('hola');
+    updateScore(getMaxScore(numberOfPieces));
     let height = image.height;
     let width = image.width;
     console.log(image);
@@ -258,7 +259,7 @@ function gameLogic(image,numberOfPieces){
     let arrayClick = [];
 
     for(let i = 0; i < cols.length; i++){
-        cols[i].addEventListener('click',function(){
+        cols[i].addEventListener('click',function test(){
             if(arrayClick.length == 1){
                 arrayClick.push(cols[i]);
                 let position1 = arrayClick[0].style.backgroundPosition;
@@ -267,10 +268,20 @@ function gameLogic(image,numberOfPieces){
                 arrayClick[0].style.borderColor = 'black';
                 arrayClick[1].style.borderColor = 'black';
                 console.log(arrayClick);
+                updateScore(getScore() - 1);
                 arrayClick = [];
-            }else if(cols[i].style.borderColor == 'red'){
+                
+            }  else if(getScore() == 0){
+                for (let j = 0; j < cols.length; j++) {
+                    cols[j].removeEventListener('click',test);
+                    cols[j].style.borderColor = 'yellow';
+                    console.log(cols[j]);
+                    console.log('Entra');  
+                }
+                alert('You Lose!')
+            }  else if(cols[i].style.borderColor == 'red'){
                 cols[i].style.borderColor = 'black';        
-            } else {
+            }  else {
                 cols[i].style.borderColor = 'red';
                 arrayClick.push(cols[i]);
                 console.log(arrayClick);
