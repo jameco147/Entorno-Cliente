@@ -4,8 +4,8 @@
 function getNumberPiecesFromUser(){
     
     let flag = true;
+    let pieces = prompt('Select number of pieces please');
     while(flag){
-        let pieces = prompt('Select number of pieces please');
         piecesSqrt = Math.sqrt(pieces);
         if (Number.isInteger(piecesSqrt)) {
             alert('Correct number');
@@ -15,11 +15,12 @@ function getNumberPiecesFromUser(){
               alert('You have to introduce a number');  
             }else{
                 alert('Incorrect number, try it again!');
+                pieces = prompt('Select number of pieces please');
             }   
         }
-    }
-    return piecesSqrt;
-    
+        console.log(pieces);
+    }  
+    return pieces;  
 }
 
 // 2.Funciones de manipulación de la puntuación 
@@ -180,8 +181,8 @@ function createReferenceSolution(width,height,numberPieces){
 }
 
 
-let positions = createReferenceSolution(958,1277,9);
-console.log(positions);
+//let positions = createReferenceSolution(958,1277,getNumberPiecesFromUser());
+//console.log(positions);
 
 function drawContentPuzzle(arrayMovements){
     
@@ -289,5 +290,5 @@ function gameLogic(image,numberOfPieces){
     
 
 }
-getNumberPiecesFromUser();
-//initGame('cat.jpg',9);
+//getNumberPiecesFromUser();
+initGame('cat.jpg',getNumberPiecesFromUser());
