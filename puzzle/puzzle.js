@@ -6,19 +6,19 @@ function getNumberPiecesFromUser(){
     let flag = true;
     while(flag){
         let pieces = prompt('Select number of pieces please');
-        pieces = Math.sqrt(pieces);
-        if (Number.isInteger(pieces)) {
+        piecesSqrt = Math.sqrt(pieces);
+        if (Number.isInteger(piecesSqrt)) {
             alert('Correct number');
             flag = false;
         }else{
-            if (isNaN(pieces)) {
+            if (isNaN(piecesSqrt)) {
               alert('You have to introduce a number');  
             }else{
                 alert('Incorrect number, try it again!');
             }   
         }
     }
-    return pieces;
+    return piecesSqrt;
     
 }
 
@@ -244,22 +244,44 @@ function gameLogic(image,numberOfPieces){
     console.log(lastPositionImg);
    
     console.log(height,width,numberOfPieces);
-    let desplazamientos = createReferenceSolution(width,height,numberOfPieces);
-    console.log(desplazamientos);
-    shuffle(desplazamientos);
+    let movements = createReferenceSolution(width,height,numberOfPieces);
+    console.log(movements);
+    shuffle(movements);
     createPuzzleLayout(numberOfPieces,width,height,lastPositionImg);
-    drawContentPuzzle(desplazamientos);
+    drawContentPuzzle(movements);
 
     let cols = document.getElementsByTagName('td');
     
     //col.style.border = '3px solid red';  
 
-    for (let i = 0; i < cols.length; i++) {
-        col[i].addEventListener('click',f);
-        
-    }
+    let arrayClick = [];
 
-    console.log(cols);
+    for(let i = 0; i < cols.length; i++){
+        cols[i].addEventListener('click',function(){
+            if(arrayClick.length == 1){
+                arrayClick.push(cols[i]);
+                let position1 = arrayClick[0].style.backgroundPosition;
+                arrayClick[0].style.backgroundPosition = arrayClick[1].style.backgroundPosition;
+                arrayClick[1].style.backgroundPosition = position1;
+                arrayClick[0].style.borderColor = 'black';
+                arrayClick[1].style.borderColor = 'black';
+                console.log(arrayClick);
+                arrayClick = [];
+            }else if(cols[i].style.borderColor == 'red'){
+                cols[i].style.borderColor = 'black';        
+            } else {
+                cols[i].style.borderColor = 'red';
+                arrayClick.push(cols[i]);
+                console.log(arrayClick);
+            }
+            
+            
+            
+    }) 
+   } 
+   
+
+    
 
 
     
@@ -267,5 +289,5 @@ function gameLogic(image,numberOfPieces){
     
 
 }
-
-initGame('cat.jpg',9);
+getNumberPiecesFromUser();
+//initGame('cat.jpg',9);
