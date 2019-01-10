@@ -181,8 +181,8 @@ function createReferenceSolution(width,height,numberPieces){
 }
 
 
-//let positions = createReferenceSolution(958,1277,getNumberPiecesFromUser());
-//console.log(positions);
+//let positions = createReferenceSolution(958,1277,9);
+//console.log(shuffle(positions));
 
 function drawContentPuzzle(arrayMovements){
     
@@ -198,30 +198,14 @@ function drawContentPuzzle(arrayMovements){
 //5. Lógica del juego
 
 
-function checkIfSolution(position, solution){
-    for (let i = 0; i < position.length; i++) {
-        let piece = document.getElementById("piece"+[i]);
-        let positionX = parseInt(piece.style.backgroundPositionX);
-        let positionY = parseInt(piece.style.backgroundPositionY);
-        //console.log(piece);
-        console.log(positionX);
-        console.log(positionY);
-
-        let resul = solution[i];
-        let resulX = parseInt(resul[0]);
-        let resulY = parseInt(resul[1]);
-        console.log(resulX);
-        console.log(resulY);
-         
-        
-
-        if(positionX === resulX && positionY === resulY){
-            console.log('Puzzle terminado');        
-        } else {
-            console.log('Puzzle no terminado');
+function checkIfSolution(solucionado, actual) {
+    for (let i = 0; i < solucionado.length; i++) {
+        if (solucionado[i] !== actual[i]) {
+          return false;
         }
     }
-}
+    return true;
+  }
 
 //let testArray = [150,20];
 //checkIfSolution(createReferenceSolution(958,1277,9), createReferenceSolution(958,1277,9));
@@ -244,8 +228,9 @@ function gameLogic(image,numberOfPieces){
     let img = image.src.split('/');
     let lastPositionImg = img[img.length-1];
     console.log(lastPositionImg);
+    console.log(createReferenceSolution(width,height,numberOfPieces));
+    console.log(shuffle(createReferenceSolution(width,height,numberOfPieces)));
    
-    console.log(height,width,numberOfPieces);
     let movements = createReferenceSolution(width,height,numberOfPieces);
     console.log(movements);
     shuffle(movements);
@@ -253,10 +238,19 @@ function gameLogic(image,numberOfPieces){
     drawContentPuzzle(movements);
 
     let cols = document.getElementsByTagName('td');
+    console.log(movements);
+
+    arraySolution = [];
+    for (let i = 0; i < cols.length; i++) {
+        arraySolution.push(createReferenceSolution(width,height,numberOfPieces)[i]);        
+    }
+    console.log(arraySolution);
+    
     
     //col.style.border = '3px solid red';  
 
     let arrayClick = [];
+    let arrayPositionsUpdated = [];
 
     for(let i = 0; i < cols.length; i++){
         cols[i].addEventListener('click',function test(){
@@ -270,18 +264,29 @@ function gameLogic(image,numberOfPieces){
                 console.log(arrayClick);
                 updateScore(getScore() - 1);
                 arrayClick = [];
-                
-            }  else if(getScore() == 0){
-                for (let j = 0; j < cols.length; j++) {
-                    cols[j].removeEventListener('click',test);
-                    cols[j].style.borderColor = 'yellow';
-                    console.log(cols[j]);
-                    console.log('Entra');  
+                let updated = document.getElementsByTagName('td');
+                for (let j = 0; j < updated.length; j++) {
+                    //console.log(updated[j].style.backgroundPosition);
+                    arrayPositionsUpdated.push(parseInt(updated[j].style.backgroundPosition));
+                    
                 }
-                alert('You Lose!')
-            }  else if(cols[i].style.borderColor == 'red'){
+                //console.log(arrayPositionsUpdated);
+                if(checkIfSolution(arraySolution,arrayPositionsUpdated) == true){
+                    console.log('Terminado');
+                    arrayPositionsUpdated = [];
+                } else {
+                    console.log('No');
+                    console.log(arrayPositionsUpdated);
+                    console.log(arraySolution);
+                    arrayPositionsUpdated = [];
+                }
+                
+               
+                
+                
+            }else if(cols[i].style.borderColor == 'red'){
                 cols[i].style.borderColor = 'black';        
-            }  else {
+            }else {
                 cols[i].style.borderColor = 'red';
                 arrayClick.push(cols[i]);
                 console.log(arrayClick);
