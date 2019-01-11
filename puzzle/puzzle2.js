@@ -227,75 +227,39 @@ function gameLogic(image,numberOfPieces){
     console.log(image);
     let img = image.src.split('/');
     let lastPositionImg = img[img.length-1];
-    console.log(lastPositionImg);
-    console.log(createReferenceSolution(width,height,numberOfPieces));
-    console.log(shuffle(createReferenceSolution(width,height,numberOfPieces)));
-   
     let movements = createReferenceSolution(width,height,numberOfPieces);
-    console.log(movements);
     shuffle(movements);
     createPuzzleLayout(numberOfPieces,width,height,lastPositionImg);
     drawContentPuzzle(movements);
-
     let cols = document.getElementsByTagName('td');
-    console.log(movements);
-
-    arraySolution = [];
-    for (let i = 0; i < cols.length; i++) {
-        arraySolution.push(createReferenceSolution(width,height,numberOfPieces)[i]);        
-    }
-    console.log(arraySolution);
-    
-    
-    //col.style.border = '3px solid red';  
-
-    let arrayClick = [];
-    let arrayPositionsUpdated = [];
+    let auxiliar = undefined;
 
     for(let i = 0; i < cols.length; i++){
-        cols[i].addEventListener('click',function test(){
-            if(arrayClick.length == 1){
-                arrayClick.push(cols[i]);
-                let position1 = arrayClick[0].style.backgroundPosition;
-                arrayClick[0].style.backgroundPosition = arrayClick[1].style.backgroundPosition;
-                arrayClick[1].style.backgroundPosition = position1;
-                arrayClick[0].style.borderColor = 'black';
-                arrayClick[1].style.borderColor = 'black';
-                console.log(arrayClick);
-                updateScore(getScore() - 1);
-                arrayClick = [];
-                let updated = document.getElementsByTagName('td');
-                for (let j = 0; j < updated.length; j++) {
-                    //console.log(updated[j].style.backgroundPosition);
-                    arrayPositionsUpdated.push(updated[j].style.backgroundPosition);
-                    
-                }
-                //console.log(arrayPositionsUpdated);
-                if(checkIfSolution(arraySolution,arrayPositionsUpdated) == true){
-                    console.log('Terminado');
-                    arrayPositionsUpdated = [];
-                } else {
-                    console.log('No');
-                    console.log(arrayPositionsUpdated);
-                    console.log(arraySolution);
-                    arrayPositionsUpdated = [];
-                }
-                
-               
-                
-                
-            }else if(cols[i].style.borderColor == 'red'){
-                cols[i].style.borderColor = 'black';        
-            }else {
-                cols[i].style.borderColor = 'red';
-                arrayClick.push(cols[i]);
-                console.log(arrayClick);
-            }
-            
-            
-            
-    }) 
+        cols[i].addEventListener('click',evento);
+        console.log(cols);
    } 
+
+    function evento(){
+        if(this.style.borderColor === 'black'){
+            if(auxiliar === undefined){
+                this.style.borderColor = 'red';
+                auxiliar = parseInt(this.id.substring(5, this.id.length));
+            } else {
+                //Cambiar posiciones
+                let aux = this.style.backgroundPosition;
+                this.style.backgroundPosition = document.getElementById('piece'+ auxiliar).style.backgroundPosition;
+                document.getElementById('piece'+ auxiliar).style.backgroundPosition = aux;
+                document.getElementById('piece'+ auxiliar).style.borderColor = 'black';
+                auxiliar = undefined;
+                decreaseScore(1);
+            }
+               
+        } else if(this.style.borderColor === 'red'){
+            this.style.borderColor = 'black';
+        }
+        
+    }
+  
    
 
     
